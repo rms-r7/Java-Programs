@@ -1,2 +1,2 @@
 # Java-Programs
-Inheritance = 04.08.25
+Inheritance prgrm & o/p - 04.08.25
