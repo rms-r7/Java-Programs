@@ -1,1 +1,97 @@
+import java.util.Scanner
+import java.time.Year;
 
+class Vehicle {
+    String brand, model;
+    int year;
+    double basePrice;
+
+    Vehicle(String brand, String model, int year, double basePrice) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.basePrice = basePrice;
+    }
+
+    double calculateResaleValue() {
+        int age = Year.now().getValue() - year;
+        return basePrice * Math.pow(0.85, age);
+    }
+}
+
+class Car extends Vehicle {
+    int doors;
+
+    Car(String brand, String model, int year, double basePrice, int doors) {
+        super(brand, model, year, basePrice);
+        this.doors = doors;
+    }
+
+    void display() {
+        double insurance = 5000.0 + 1000.0 * doors;
+        double maintenance = 3000.0 + 500.0 * doors;
+
+        System.out.printf("Brand: %s | Model: %s | Year: %d | Doors: %d\n", brand, model, year, doors);
+        System.out.printf("Insurance: Rs.%.0f | Maintenance: Rs.%.0f | Resale: Rs.%.2f\n",
+            insurance, maintenance, calculateResaleValue());
+    }
+}
+
+class Motorcycle extends Vehicle {
+    boolean hasSidecar;
+
+    Motorcycle(String brand, String model, int year, double basePrice, boolean hasSidecar) {
+        super(brand, model, year, basePrice);
+        this.hasSidecar = hasSidecar;
+    }
+
+    void display() {
+        double insurance = hasSidecar ? 4000.0 : 2500.0;
+        double maintenance = hasSidecar ? 3000.0 : 2000.0;
+
+        System.out.printf("Brand: %s | Model: %s | Year: %d | Sidecar: %s\n",
+            brand, model, year, hasSidecar ? "Yes" : "No");
+        System.out.printf("Insurance: Rs.%.0f | Maintenance: Rs.%.0f | Resale: Rs.%.2f\n",
+            insurance, maintenance, calculateResaleValue());
+    }
+}
+
+public class VehicleManagementSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("\nEnter Car Details:");
+        System.out.print("Brand: ");
+        String cb = sc.nextLine();
+        System.out.print("Model: ");
+        String cm = sc.nextLine();
+        System.out.print("Year: ");
+        int cy = sc.nextInt();
+        System.out.print("Base Price: ");
+        double cp = sc.nextDouble();
+        System.out.print("Number of Doors: ");
+        int cd = sc.nextInt();
+
+        sc.nextLine(); 
+
+        System.out.println("\nEnter Motorcycle Details:");
+        System.out.print("Brand: ");
+        String mb = sc.nextLine();
+        System.out.print("Model: ");
+        String mm = sc.nextLine();
+        System.out.print("Year: ");
+        int my = sc.nextInt();
+        System.out.print("Base Price: ");
+        double mp = sc.nextDouble();
+        System.out.print("Has Sidecar? (true/false): ");
+        boolean ms = sc.nextBoolean();
+
+        System.out.println("\n------ VEHICLE REPORT ------");
+        System.out.println("Car Details:");
+        new Car(cb, cm, cy, cp, cd).display();
+
+        System.out.println("\nMotorcycle Details:");
+        new Motorcycle(mb, mm, my, mp, ms).display();
+
+    }
+}
